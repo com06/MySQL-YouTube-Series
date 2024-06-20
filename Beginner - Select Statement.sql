@@ -80,3 +80,4 @@ FROM employee_salary;
 
 #Now a lot happens in the select statement. We have an entire module dedicated to just the 
 #select statement so this is kind of just an introduction to the select statement.
+
