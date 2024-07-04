@@ -13,7 +13,6 @@ SELECT * FROM employee_demographics;
 -- so really when we get a new row or data is inserted into the payments table we want a trigger to update the correct invoice 
 -- with the amount that was paid
 -- so let's write this out
-USE parks_and_recreation;
 DELIMITER $$
 
 CREATE TRIGGER employee_insert2
@@ -66,7 +65,7 @@ WHERE employee_id = 13;
 -- All we have to do is delete them from the demographics table
 
 SELECT * 
-FROM parks_and_recreation.employee_demographics;
+FROM employee_demographics;
 
 SHOW EVENTS;
 
@@ -75,13 +74,21 @@ DROP EVENT IF EXISTS delete_retirees;
 DELIMITER $$
 CREATE EVENT delete_retirees
 ON SCHEDULE EVERY 30 SECOND
-DO BEGIN
+DO 
 	DELETE
-	FROM parks_and_recreation.employee_demographics
+	FROM employee_demographics
     WHERE age >= 60;
 END $$
 
+-- DISABLE EVENT;
+ALTER EVENT delete_retirees DISABLE;
+
+-- ENABLE EVENT;
+ALTER EVENT delete_retirees ENABLE;
+
+-- DROP EVENT;
+DROP EVENT delete_retirees;
 
 -- if we run it again you can see Jerry is now fired -- or I mean retired
 SELECT * 
-FROM parks_and_recreation.employee_demographics;
+FROM employee_demographics;
